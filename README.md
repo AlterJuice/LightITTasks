@@ -4,23 +4,31 @@
 Console game has two ***Clases***: **Player** and **ConsoleGame** which has privat param-list whith PlayerObjects
 
 So how to start:
-1. You must create GamObject: *game = ConsoleGame(log_to_file=True)*
-1.2 log_to_file meaning rhat all the game info will be saved to the file
+
+1. You must create GamObject: 
+
+       game = ConsoleGame(log_to_file=True)
+   
+   log_to_file meaning rhat all the game info will be saved to the file
+   
 
 2. Then you can set up game settings:
 	One of the features of this ConsoleGame is that you can add Players as mush as you want 
 	(In fact HR manager Yulia said that it will be good if more then 2 players)
 	
+    
 	First variant - set up settings like maxHealth, middleScores, sleepTime between steps and amount of Players in consoleMode:
-		*game.console_game_set_up_settings()*
-		
+    
+	    game.console_game_set_up_settings()
+	
+    
 	Second variant - you can set then up by yourself like:
-		`Player.maxHealth = 100
-    	Player.middleHitScore = 22
-    	Player.middleRecoveryScore = 22
-    	ConsoleGame.stepSleepSeconds = 5
-		
-		game.add_player("Computer", is_comp=True)
+    
+        Player.maxHealth = 100
+        Player.middleHitScore = 22
+        Player.middleRecoveryScore = 22
+   	    ConsoleGame.stepSleepSeconds = 5	
+        game.add_player("Computer", is_comp=True)
     	game.add_player("Human")
     	game.add_player("John")
 		
@@ -30,41 +38,43 @@ So how to start:
     	# game.add_player("Julia")
     	# game.add_player("Din")`
 		
-3. At the end you must start the game using method `game.start_game()`
-The end.
+3. At the end you must start the game using method 
 
+       game.start_game()
+       
+**The end.**
+#
+#
+**Soo.. The code we have in the main file (starting file):**
+#
+#
+    from ConsoleGame import *
 
-Soo.. The code we have in the main file (starting file):
+    ask = input("Do you want change game settings? (Y/N)")
+    game = ConsoleGame(log_to_file=True)
 
-________________________
+    if ask.lower() == 'y':
+        game.console_game_set_up_settings()
+    else:
 
-from ConsoleGame import *
+        Player.maxHealth = 100
+        Player.middleHitScore = 22
+        Player.middleRecoveryScore = 22
 
-ask = input("Do you want change game settings? (Y/N)")
-game = ConsoleGame(log_to_file=True)
+        # _____ ConsoleGame Settings
+        ConsoleGame.stepSleepSeconds = 5
 
-if ask.lower() == 'y':
-    game.console_game_set_up_settings()
-else:
-    # _____ Player Settings
-    Player.maxHealth = 100
-    Player.middleHitScore = 22
-    Player.middleRecoveryScore = 22
+        game.add_player("Computer", is_comp=True)
+        game.add_player("Human")
+        game.add_player("John")
 
-    # _____ ConsoleGame Settings
-    ConsoleGame.stepSleepSeconds = 5
+        # # You can add also more players :D
+        # game.add_player("John")
+        # game.add_player("Snack")
+        # game.add_player("Julia")
+        # game.add_player("Din")
 
-    game.add_player("Computer", is_comp=True)
-    game.add_player("Human")
-    game.add_player("John")
-
-    # # You can add also more players :D
-    # game.add_player("John")
-    # game.add_player("Snack")
-    # game.add_player("Julia")
-    # game.add_player("Din")
-
-game.start_game()
+    game.start_game()
 
 
 	
