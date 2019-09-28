@@ -1,45 +1,75 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Console Game Project (For LightIT)
+*Bohdan Shurnitsyn. bogdan171000@gmail.com*
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+Console game has two ***Clases***: **Player** and **ConsoleGame** which has privat param-list whith PlayerObjects
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+So how to start:
+1. You must create GamObject: `game = ConsoleGame(log_to_file=True)`;
+log_to_file meaning rhat all the game info will be saved to the file
 
----
+2. Then you can set up game settings:
+	One of the features of this ConsoleGame is that you can add Players as mush as you want 
+	(In fact HR manager Yulia said that it will be good if more then 2 players)
+	
+	First variant - set up settings like maxHealth, middleScores, sleepTime between steps and amount of Players in consoleMode:
+		`game.console_game_set_up_settings()`
+		
+	Second variant - you can set then up by yourself like:
+		`Player.maxHealth = 100
+    	Player.middleHitScore = 22
+    	Player.middleRecoveryScore = 22
+    	ConsoleGame.stepSleepSeconds = 5
+		
+		game.add_player("Computer", is_comp=True)
+    	game.add_player("Human")
+    	game.add_player("John")
+		
+		# # You can add also more players :D
+    	# game.add_player("John")
+    	# game.add_player("Snack")
+    	# game.add_player("Julia")
+    	# game.add_player("Din")`
+		
+3. At the end you must start the game using method `game.start_game()`
+The end.
 
-## Edit a file
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+Soo.. The code we have in the main file (starting file):
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+________________________
 
----
+from ConsoleGame import *
 
-## Create a file
+ask = input("Do you want change game settings? (Y/N)")
+game = ConsoleGame(log_to_file=True)
 
-Next, you’ll add a new file to this repository.
+if ask.lower() == 'y':
+    game.console_game_set_up_settings()
+else:
+    # _____ Player Settings
+    Player.maxHealth = 100
+    Player.middleHitScore = 22
+    Player.middleRecoveryScore = 22
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+    # _____ ConsoleGame Settings
+    ConsoleGame.stepSleepSeconds = 5
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+    game.add_player("Computer", is_comp=True)
+    game.add_player("Human")
+    game.add_player("John")
 
----
+    # # You can add also more players :D
+    # game.add_player("John")
+    # game.add_player("Snack")
+    # game.add_player("Julia")
+    # game.add_player("Din")
 
-## Clone a repository
+game.start_game()
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+	
+	
+		
+		
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+
