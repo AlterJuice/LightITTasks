@@ -1,0 +1,274 @@
+from random import randint as random_randint
+from random import choice as random_choice
+from time import sleep as time_sleep
+
+_RECOVERING_STR = "Step {0}. {1} recovered for {2} points."
+_HIT_WITH_DMG = "Step {0}. {1} hits {2}: -{3} dmg."
+_WAS_KILLED_BY = "{0} ({1})"
+_ATTACKER_JUST_KILLED = 'Step {0}. {1} killed {2}!'
+_KILL_EVENT = "was killed by {}; Step#{}"
+
+
+_GAME_OVER_RESULT = 'Game Over!\nTotal players: {0}\nWinner: {1}\n\nLosers:\n{2}'
+_ALIVE_PLAYERS = "Alive players: {0}\n\n"
+
+
+class Player:
+    """
+    You can change such staticVars of Class Player:
+
+    maxHealth - Max health of each PlayerObj (default 100)
+    middleHitScore - Middle Int Damage Score (default 22)
+    middleRecoveryScore - Middle Int Recovery Score (default 22)
+
+    Just import Player class and than:
+
+    Player.maxHealth = {yourValue}
+    middleHitScore = {your Value}
+    middleRecoveryScore = {your Value}
+    """
+    maxHealth: int = 100
+    middleHitScore: int = 22
+    middleRecoveryScore: int = 22
+
+    def __init__(self, name: str, is_comp: bool, player_id: int):
+        """
+        :param name: Player's name
+        :param is_comp: Player is Computer
+        """
+        self.__name = name
+        self.__health = Player.maxHealth
+        self.__is_died = False
+        self.__id = player_id
+        self.__is_comp = is_comp
+        self.__max_random_state = 6
+        self.__last_deed = str()
+        self.__kill_event = str()
+
+    @property
+    def name(self) -> str:
+        return "{0}#{1}".format(self.__name, self.__id)
+
+    @property
+    def health(self) -> int:
+        return self.__health
+
+    @health.setter
+    def health(self, health_: int):
+        if not self.__is_died:
+            self.__health = (0 if health_ < 0 else
+                             Player.maxHealth if health_ > Player.maxHealth
+                             else health_)
+
+    @property
+    def is_died(self) -> bool:
+        return self.__is_died
+
+    @property
+    def id(self) -> int:
+        return self.__id
+
+    @property
+    def is_comp(self):
+        return self.__is_comp
+
+    def random_deed_with(self, opponent: 'Player', step: int):
+        """
+        Randomizes Player's deed and manipulates with health
+
+        :param step: game step#ID
+        :param opponent: Another PlayerObj (self != opponent)
+        """
+        if self.__is_comp:
+            self.__max_random_state = 9 if self.health <= round(Player.maxHealth * 0.35) else 6
+            # Increasing chance of healing
+
+        deed_state = random_randint(1, self.__max_random_state)
+        if deed_state in (1, 2):
+            self.__last_deed = self.hit_little_range(opponent, step)
+        elif deed_state in (3, 4):
+            self.__last_deed = self.hit_big_range(opponent, step)
+        else:  # elif deed_state >= 3
+            self.__last_deed = self.recover_yourself(step)
+
+    def hit_little_range(self, opponent: 'Player', step: int) -> str:
+        """
+        Decreases opponent's health with lower Range (-3, 4)
+
+        :param step: game step#ID
+        :param opponent: Another PlayerObj (self != opponent)
+        :returns: Last Player's Deed (attacker hits opponent)
+        """
+        score = Player.middleHitScore + random_randint(-3, 4)
+        opponent.health -= score
+        return _HIT_WITH_DMG.format(step, self, opponent, score)
+
+    def hit_big_range(self, opponent: 'Player', step: int) -> str:
+        """
+        Decreases opponent's health with bigger Range (-13, 12)
+
+        :param step: game step#ID
+        :param opponent: Another PlayerObj (self != opponent)
+        :returns: Last Player's Deed (attacker hits opponent)
+        """
+        score = Player.middleHitScore + random_randint(-13, 12)
+        opponent.health -= score
+        return _HIT_WITH_DMG.format(step, self, opponent, score)
+
+    def recover_yourself(self, step: int) -> str:
+        """
+        Increases Player's health;
+
+        :param step: game step#ID
+        :returns: Last Player's Deed (Recovery)
+        """
+        score = Player.middleRecoveryScore + random_randint(-3, 4)
+        self.health += score
+        return _RECOVERING_STR.format(step, self, score)
+
+    def set_kill_event(self, killer_name: str, step: int):
+        """Sets player's death info and :returns: get_kill_event()"""
+        self.__is_died = True
+        self.__kill_event = _KILL_EVENT.format(killer_name, step)
+        return _ATTACKER_JUST_KILLED.format(step, killer_name, self.name)
+
+    def get_kill_event(self) -> str:
+        """:returns: Player's death info"""
+        return _WAS_KILLED_BY.format(self.name, self.__kill_event)
+
+    def get_last_deed(self) -> str:
+        """:returns: Player's last deed, like hit or recovery """
+        return self.__last_deed
+
+    def get_info(self) -> str:
+        """:returns: Player's current information"""
+        if self.__is_died:
+            return self.get_kill_event()
+        return "{0}({1}/{2})".format(self.name, self.health, Player.maxHealth)
+
+    def __repr__(self):
+        return "{0}({1}/{2})".format(self.name, self.health, Player.maxHealth)
+
+
+class ConsoleGame:
+    """
+    You can change such staticVars of Class ConsoleGame:
+    stepSleepSeconds - Used to make program sleep for any time (default 5sec (Int))
+
+    Just import ConsoleGame class and than:
+
+    ConsoleGame.stepSleepSeconds = {yourValue}
+    """
+    stepSleepSeconds = 5
+
+    def __init__(self, log_to_file: bool = True):
+        """Inits ConsoleGame object."""
+        self.__players = list()
+        # List of Player objs
+        self.__count_players = 0
+        self.__step = 0
+        self.__log_to_file = log_to_file
+        self.__losers = list()
+        self.__winner = None
+        # Only one winner
+
+    @property
+    def winner(self):
+        return self.__winner
+
+    @property
+    def losers(self):
+        return self.__losers
+
+    def console_game_set_up_settings(self):
+        """Setting Up game configurations"""
+        def int_input(prompt):
+            temp = input(prompt)
+            while not temp.isdigit():
+                temp = input("Try again, must be integers! " + prompt)
+            return int(temp)
+
+        Player.maxHealth = int_input("Write Player max health. (default 100)")
+        Player.middleHitScore = int_input("Write middle score of damage. (default 22)")
+        Player.middleRecoveryScore = int_input("Write middle recovery score. (default 22)")
+        ConsoleGame.stepSleepSeconds = int_input("Write sleepTime btw. steps. (default 5)")
+        len_players = int_input("How many players do you want to add (except Comp)?")
+
+        self.add_player("Computer", True)
+        for i in range(len_players):
+            self.add_player(input('Give name for Player#'+str(i+2)+': '), True)
+
+        input("\nWrite something to start the game!\n\n")
+
+    def add_player(self, name: str, is_comp: bool = False):
+        """
+        :param name: New Player's name
+        :param is_comp: bool player is computer
+        """
+        self.__count_players += 1
+        self.__players.append(Player(name, is_comp, self.__count_players))
+
+    def start_game(self):
+        """Method starts game"""
+        assert len(self.__players) >= 2, "Must be 2 players at least!"
+        assert any(obj.is_comp for obj in self.__players), "Must be at least 1 Computer Player!"
+        alive_pl_indexes = list(range(len(self.__players)))
+        # alive players indexes
+
+        if ConsoleGame.stepSleepSeconds == 0:
+            ConsoleGame.stepSleepSeconds = 0.2
+
+        while len(alive_pl_indexes) != 1:
+            self.__step += 1
+            # Increasing Player.__step
+
+            attacker_ind = random_choice(alive_pl_indexes)
+            opponent_ind = random_choice(alive_pl_indexes)
+            # random choice of alive players indexes
+
+            while opponent_ind == attacker_ind:
+                opponent_ind = random_choice(alive_pl_indexes)
+                # for preventing cases when attacker == opponent
+
+            attacker = self.__players[attacker_ind]
+            opponent = self.__players[opponent_ind]
+
+            attacker.random_deed_with(opponent, self.__step)
+            # Process random deeds with opponent (or healing himself)
+
+            self.log(attacker.get_last_deed())
+
+            # Check if opponent's health less then 0
+            if opponent.health <= 0:
+                alive_pl_indexes.remove(opponent_ind)
+                kill_event = opponent.set_kill_event(attacker.name, self.__step)
+                self.__losers.append(opponent.get_info())
+                self.log(kill_event)
+
+            self.log(_ALIVE_PLAYERS.format(self.get_alive_players_info()))
+            time_sleep(ConsoleGame.stepSleepSeconds)
+            # Sleep between steps
+        else:
+            # Code starts when $while condition$ != true
+            self.__winner = self.__players[alive_pl_indexes[0]].get_info()
+            result_text = _GAME_OVER_RESULT.format(self.__count_players, self.__winner, '\n'.join(self.__losers))
+            self.log(result_text)
+
+    def log(self, string_info: str):
+        """:param string_info: string logging information"""
+        print(string_info)
+        if self.__log_to_file:
+            with open("ConsoleGame.txt", 'a') as log_file:
+                print(string_info, file=log_file)
+
+    def get_alive_players_info(self) -> str:
+        """:returns: alive Players"""
+        return ', '.join(obj.get_info() for obj in self.__players if not obj.is_died)
+
+    def get_players(self) -> list:
+        """:returns: ListPlayers"""
+        return self.__players
+
+    def get_players_names(self) -> list:
+        """:returns: Players' Names from ListPlayers"""
+        return [player.name for player in self.__players]
