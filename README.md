@@ -65,7 +65,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
     if ask.lower() == 'y':
         game.console_game_set_up_settings()
     else:
-
+        # _____ Player Settings
         Player.maxHealth = 100
         Player.middleHitScore = 22
         Player.middleRecoveryScore = 22
