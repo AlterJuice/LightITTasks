@@ -1,26 +1,26 @@
 
 # First Tour LightIT
-# bogdan171000@gmail.com
-
-q2 = [3, 2, "two", 'apple', 'apple']
-q3 = [3, '3', 2, "two", 'apple', 'apple', 'apple']
 
 
-def check_array(array):
-    return any(array.count(x) % 2 == 0 for x in set(i if isinstance(i, int) else i.lower() for i in array))
+q1 = [3, 2, "two", 'apple', 'apple']
+q2 = [3, '3', 2, "two", 'apple', 'apple', 'apple']
+# q3 = [3, 2, "two", 'apple', 'applE']
 
-# q1 = [3, 2, "two", 'apple', 'applE']
 
 # def check_array_2(array):  # for any arrays
 #     array = [i if isinstance(i, int) else i.lower() for i in array]
 #     return any(map(lambda x: array.count(x) % 2 == 0, set(array)))
 
 
-print(check_array(q2))  # Must be True
-print(check_array(q3))  # Must be False
+def check_array(array):
+    return any(array.count(x) % 2 == 0 for x in set(i if isinstance(i, int) else i.lower() for i in array))
+
+
+print(check_array(q1))  # Must be True
+print(check_array(q2))  # Must be False
 print("________________")
 
-# print(check_array_final(q1))
-# print(check_array_final(q3))
+# print(check_array_2(q3))  # Must be True
+# print(check_array_2(q2))  # Must be False
 
 input()
