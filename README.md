@@ -4,8 +4,8 @@
 Console game has two ***Clases***: **Player** and **ConsoleGame** which has privat param-list whith PlayerObjects
 
 So how to start:
-1. You must create GamObject: `game = ConsoleGame(log_to_file=True)`;
-log_to_file meaning rhat all the game info will be saved to the file
+1. You must create GamObject: `game = ConsoleGame(log_to_file=True)`
+1.2 log_to_file meaning rhat all the game info will be saved to the file
 
 2. Then you can set up game settings:
 	One of the features of this ConsoleGame is that you can add Players as mush as you want 
