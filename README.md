@@ -1,9 +1,18 @@
 ## Console Game Project (For LightIT)
 *Bohdan Shurnitsyn. bogdan171000@gmail.com*
 
+#
+
+
 Console game has two ***Clases***: **Player** and **ConsoleGame** which has privat param-list whith PlayerObjects
 
-So how to start:
+# So how to start..
+**At first you should to download files "ConsoleGame.py" and the starting file "SecondTour.py"**
+
+**So if you have downloaded "SecondTour.py" you can just run it**
+#
+# Another way is below..
+#
 
 1. You must create GamObject: 
 
