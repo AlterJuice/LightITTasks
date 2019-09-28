@@ -4,7 +4,7 @@
 Console game has two ***Clases***: **Player** and **ConsoleGame** which has privat param-list whith PlayerObjects
 
 So how to start:
-1. You must create GamObject: `game = ConsoleGame(log_to_file=True)`
+1. You must create GamObject: *game = ConsoleGame(log_to_file=True)*
 1.2 log_to_file meaning rhat all the game info will be saved to the file
 
 2. Then you can set up game settings:
@@ -12,7 +12,7 @@ So how to start:
 	(In fact HR manager Yulia said that it will be good if more then 2 players)
 	
 	First variant - set up settings like maxHealth, middleScores, sleepTime between steps and amount of Players in consoleMode:
-		`game.console_game_set_up_settings()`
+		*game.console_game_set_up_settings()*
 		
 	Second variant - you can set then up by yourself like:
 		`Player.maxHealth = 100
