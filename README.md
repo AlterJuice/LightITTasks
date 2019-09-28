@@ -1,5 +1,5 @@
 ## Console Game Project (For LightIT)
-*Bohdan Shurnitsyn. bogdan171000@gmail.com*
+*Bohdan Snurnitsyn. bogdan171000@gmail.com*
 
 #
 
