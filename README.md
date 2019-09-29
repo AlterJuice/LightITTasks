@@ -23,7 +23,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
 
 2. Then you can set up game settings:
 	One of the features of this ConsoleGame is that you can add Players as mush as you want 
-	(In fact HR manager Yulia said that it will be good if more then 2 players)
+	(In fact HR manager Julia said that it will be good if more then 2 players)
 	
     
 	First variant - set up settings like maxHealth, middleScores, sleepTime between steps and amount of Players in consoleMode:
