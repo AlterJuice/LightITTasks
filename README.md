@@ -14,7 +14,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
 # Another way is below..
 #
 
-1. You must create GamObject: 
+1. You must create GameObject: 
 
        game = ConsoleGame(log_to_file=True)
    
@@ -23,7 +23,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
 
 2. Then you can set up game settings:
 	One of the features of this ConsoleGame is that you can add Players as many as you want 
-	(In fact HR manager Julia said that it will be good if more then 2 players)
+	(In fact HR manager Julia said that it will be good if more than 2 players)
 	
     
 	First variant - set up settings like maxHealth, middleScores, sleepTime between steps and amount of Players in consoleMode:
