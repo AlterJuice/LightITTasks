@@ -9,7 +9,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
 # So how to start..
 **At first you should to download files "ConsoleGame.py" and the starting file "SecondTour.py"**
 
-**So if you have downloaded "SecondTour.py" you can just run it**
+**So if you have downloaded "SecondTour.py" you can just run it (> python3 SecondTour.py)**
 #
 # Another way is below..
 #
