@@ -3,7 +3,7 @@
 
 #
 
-Console game has two ***Classes***: **Player** and **ConsoleGame** which has privat param-list with PlayerObjects
+Console game has three ***Classes***: **Player**, **Event** and **ConsoleGame** which has privat param-list with PlayerObjects
 
 # So how to start...
 **At first you should to download files "ConsoleGame.py" and the starting file "SecondTour.py"**
