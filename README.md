@@ -1,24 +1,22 @@
 ## Console Game Project (For LightIT)
-*Bohdan Snurnitsyn. bogdan171000@gmail.com*
+*bogdan171000@gmail.com*
 
 #
 
+Console game has two ***Classes***: **Player** and **ConsoleGame** which has privat param-list with PlayerObjects
 
-Console game has two ***Clases***: **Player** and **ConsoleGame** which has privat param-list whith PlayerObjects
-
-# So how to start..
+# So how to start...
 **At first you should to download files "ConsoleGame.py" and the starting file "SecondTour.py"**
 
 **So if you have downloaded "SecondTour.py" you can just run it (> python3 SecondTour.py)**
-#
-# Another way is below..
-#
+
+# Another way is below...
 
 1. You must create GameObject: 
 
        game = ConsoleGame(log_to_file=True)
    
-   log_to_file meaning rhat all the game info will be saved to the file
+   log_to_file means the all game info will be saved to the file
    
 
 2. Then you can set up game settings:
@@ -54,7 +52,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
 **The end.**
 #
 #
-**Soo.. The code we have in the main file (starting file):**
+**Soo.. The code we have in the main(starting) file):**
 #
 #
     from ConsoleGame import *
@@ -71,7 +69,7 @@ Console game has two ***Clases***: **Player** and **ConsoleGame** which has priv
         Player.middleRecoveryScore = 22
 
         # _____ ConsoleGame Settings
-        ConsoleGame.stepSleepSeconds = 5
+        ConsoleGame.stepSleepSeconds = 2
 
         game.add_player("Computer", is_comp=True)
         game.add_player("Human")
