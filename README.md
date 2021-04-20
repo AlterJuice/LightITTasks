@@ -57,7 +57,7 @@ Console game has three ***Classes***: **Player**, **Event** and **ConsoleGame** 
 #
     from ConsoleGame import *
 
-    ask = input("Do you want change game settings? (Y/N)")
+    ask = input("Do you want to change game settings? (Y/N)")
     game = ConsoleGame(log_to_file=True)
 
     if ask.lower() == 'y':
