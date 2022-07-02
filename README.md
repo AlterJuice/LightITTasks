@@ -1,5 +1,4 @@
 ## Console Game Project (For LightIT)
-*bogdan171000@gmail.com*
 
 #
 
